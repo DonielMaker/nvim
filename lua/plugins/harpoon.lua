@@ -23,8 +23,9 @@ return {
             keymap.set("n", "<C-f7>", function() harpoon:list():select(7) end, { desc = "7th harpoon item"})
             keymap.set("n", "<C-f8>", function() harpoon:list():select(8) end, { desc = "8th harpoon item"})
             keymap.set("n", "<C-f9>", function() harpoon:list():select(9) end, { desc = "9th harpoon item"})
-            keymap.set("n", "<C-f0>", function() harpoon:list():select(10) end, { desc = "10th harpoon item"})
+            keymap.set("n", "<C-f10>", function() harpoon:list():select(10) end, { desc = "10th harpoon item"})
         end
     }
 }
+
 

@@ -31,8 +31,6 @@ return {
         "cssls",
         "lua_ls",
         "rust_analyzer",
-        "slint_lsp",
-        "tsserver",
       },
     })
 

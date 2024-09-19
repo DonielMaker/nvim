@@ -3,6 +3,7 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     build = ':TSUpdate',
     config = function()
+        require('nvim-treesitter.install').compilers = {'zig'}
         -- import nvim-treesitter plugin
         local treesitter = require('nvim-treesitter.configs')
 
