@@ -29,10 +29,10 @@ return {
       ensure_installed = {
         "html",
         "cssls",
+        "ts_ls",
         "lua_ls",
         "rust_analyzer",
         "slint_lsp",
-        "tsserver",
       },
     })
 
