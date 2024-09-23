@@ -32,7 +32,10 @@ return {
         "ts_ls",
         "lua_ls",
         "rust_analyzer",
+<<<<<<< HEAD
         "slint_lsp",
+=======
+>>>>>>> a5e0d86b5a207ee514ec222ff4c88ea99d021485
       },
     })
 
