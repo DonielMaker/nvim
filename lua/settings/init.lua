@@ -1,5 +1,5 @@
-require("donielmaker.lazy")
-require("donielmaker.options")
+require("settings.lazy")
+require("settings.options")
 
 local keymap = vim.keymap.set
 
