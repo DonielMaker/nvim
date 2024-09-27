@@ -19,11 +19,11 @@ return {
             }
 
             -- Set menu
-            -- dashboard.section.buttons.val = {
-            --     dashboard.button("<space> sf", "󰱼  > Find File"),
-            --     dashboard.button("<space> sr", "  > Find Word"),
-            --     dashboard.button("q", "  > Quit NVIM", "<cmd>qa<CR>"),
-            -- }
+            dashboard.section.buttons.val = {
+                dashboard.button("<space> sf", "󰱼  > Find File"),
+                dashboard.button("<space> sr", "  > Find Word"),
+                dashboard.button("q", "  > Quit NVIM", "<cmd>qa<CR>"),
+            }
 
             -- Send config to alpha
             alpha.setup(dashboard.opts)
