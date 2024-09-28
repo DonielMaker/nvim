@@ -6,9 +6,16 @@ return {
             local term = require('toggleterm')
 
             term.setup({
-                direction = "vertical",
-                size = 120,
+                direction = "horizontal",
+                size = 25,
             })
+
+            local keymap = vim.keymap.set
+
+            keymap("t", "<C-Up>", [[<Cmd>wincmd k<CR>]], { desc = "Navigate Up (Terminal)"})
+            keymap("t", "<C-Down>", [[<Cmd>wincmd j<CR>]], { desc = "Navigate Down (Terminal)"})
+            keymap("t", "<C-Left>", [[<Cmd>wincmd h<CR>]], { desc = "Navigate Up (Terminal)"})
+            keymap("t", "<C-Right>", [[<Cmd>wincmd l<CR>]], { desc = "Navigate Up (Terminal)"})
         end,
     }
 }
