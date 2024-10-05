@@ -9,11 +9,11 @@ return {
         config = function()
             local wk = require("which-key")
             wk.add({
-                { "<leader>s", group = "search"},
-                { "<leader>f", group = "file explorer"},
-                { "<leader>c", group = "clear"},
-                { "<leader>x", group = "trouble"},
-                { "<leader>t", group = "terminal"},
+                { "<leader>s", group = "Search"},
+                { "<leader>f", group = "File explorer"},
+                { "<leader>c", group = "Clear"},
+                { "<leader>x", group = "Trouble"},
+                { "<leader>t", group = "Terminal"},
             })
         end
     }
