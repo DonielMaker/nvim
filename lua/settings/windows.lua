@@ -1,3 +1,7 @@
+-------------------------------------------------------------------------------
+------------------------------Window Configuration-----------------------------
+-------------------------------------------------------------------------------
+
 local keymap = vim.keymap.set
 
 keymap("n", "<leader>ch", ":nohl<CR>", { desc = "Clear search highlights" })
@@ -17,4 +21,3 @@ keymap("n", "<S-Left>", "<C-w>>", { desc = "Increase window width"})
 keymap("n", "<S-Right>", "<C-w><", { desc = "Decrease window width"})
 
 keymap("n", "<leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle Terminal"})
-
