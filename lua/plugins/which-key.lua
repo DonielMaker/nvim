@@ -11,7 +11,7 @@ return {
             wk.add({
                 { "<leader>s", group = "Search"},
                 { "<leader>f", group = "File explorer"},
-                { "<leader>c", group = "Clear"},
+                { "<leader>c", group = "Content"},
                 { "<leader>x", group = "Trouble"},
                 { "<leader>t", group = "Terminal"},
             })
