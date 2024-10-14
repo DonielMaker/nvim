@@ -28,12 +28,28 @@ return {
             mason_lspconfig.setup({
                 -- list of servers for mason to install
                 ensure_installed = {
+                    -- Webdev
                     "html",
                     "cssls",
                     "ts_ls",
+
+                    -- Lua
                     "lua_ls",
+
+                    -- Rust
                     "rust_analyzer",
-                    "slint_lsp",
+
+                    -- Gpu
+                    "wgsl_analyzer",
+
+                    -- Typst
+                    "typst_lsp",
+
+                    -- Universal
+                    "ast_grep",
+
+                    -- Nix
+                    --"nil_ls",
                 },
             })
 
