@@ -1,0 +1,10 @@
+return {
+    'glepnir/nerdicons.nvim',
+    config = function ()
+        local nerdicons = require('nerdicons')
+
+        nerdicons.setup({
+            cmd = 'NerdIcons',
+        })
+    end
+}

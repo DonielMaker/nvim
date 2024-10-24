@@ -45,6 +45,12 @@ return {
                     opts.desc = "See available code actions"
                     keymap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
+                    opts.desc = "Show documentation for what is under cursor"
+                    keymap("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+
+                    -- opts.desc = "Restart LSP"
+                    -- keymap("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
                     -- INFO: Trouble does this already
                     --
                     -- opts.desc = "Show buffer diagnostics"
@@ -59,11 +65,6 @@ return {
                     -- opts.desc = "Go to next diagnostic"
                     -- keymap("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
-                    opts.desc = "Show documentation for what is under cursor"
-                    keymap("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
-
-                    -- opts.desc = "Restart LSP"
-                    -- keymap("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
                 end,
             })
 
