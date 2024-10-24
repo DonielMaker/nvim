@@ -33,7 +33,7 @@ return {
                     "ts_ls",
                     "lua_ls",
                     "rust_analyzer",
-                    "slint_lsp",
+                    "typst_lsp",
                 },
             })
 
