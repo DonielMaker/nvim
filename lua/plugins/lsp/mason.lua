@@ -38,18 +38,7 @@ return {
 
                     -- Rust
                     "rust_analyzer",
-
-                    -- Gpu
-                    "wgsl_analyzer",
-
-                    -- Typst
                     "typst_lsp",
-
-                    -- Universal
-                    "ast_grep",
-
-                    -- Nix
-                    --"nil_ls",
                 },
             })
 
