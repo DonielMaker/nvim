@@ -41,6 +41,7 @@ return {
                     "rust",
                     "slint",
                     "regex",
+                    "slint",
                 },
                 incremental_selection = {
                     enable = true,
