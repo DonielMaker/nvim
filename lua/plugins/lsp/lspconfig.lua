@@ -116,6 +116,11 @@ return {
                         }
                     })
                 end,
+                ["nixd"] = function()
+                    lspconfig["nixd"].setup({
+                        capabilities = capabilities, 
+                    })
+                end
             })
         end,
     }
