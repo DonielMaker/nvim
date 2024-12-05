@@ -38,6 +38,7 @@ return {
 
                     -- Rust
                     "rust_analyzer",
+
                     "tinymist",
                 },
             })
