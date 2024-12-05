@@ -38,7 +38,7 @@ return {
 
                     -- Rust
                     "rust_analyzer",
-                    "typst_lsp",
+                    "tinymist",
                 },
             })
 
