@@ -83,9 +83,14 @@ return {
                         capabilities = capabilities,
                     })
                 end,
-
+                ["tinymist"] = function ()
+                    lspconfig["tinymist"].setup({
+                        capabilities = capabilities,
+                        root_dir = vim.fn.getcwd(),
+                        offset_encoding = "utf-8",
+                    })
+                end,
                 ["lua_ls"] = function()
-                    -- configure lua server (with special settings)
                     lspconfig["lua_ls"].setup({
                         capabilities = capabilities,
                         settings = {
@@ -116,12 +121,9 @@ return {
                         }
                     })
                 end,
-                ["tinymist"] = function ()
-                    lspconfig["tinymist"].setup({
-                        capabilities = capabilities,
-                    })
-                end
             })
+
+
         end,
     }
 }
