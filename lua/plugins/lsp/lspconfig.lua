@@ -116,9 +116,9 @@ return {
                         }
                     })
                 end,
-                ["nixd"] = function()
-                    lspconfig["nixd"].setup({
-                        capabilities = capabilities, 
+                ["tinymist"] = function ()
+                    lspconfig["tinymist"].setup({
+                        capabilities = capabilities,
                     })
                 end
             })
