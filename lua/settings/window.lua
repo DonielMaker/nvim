@@ -4,7 +4,9 @@
 
 local keymap = vim.keymap.set
 
-keymap("n", "<leader>ch", ":nohl<CR>", { desc = "Clear search highlights" })
+-- keymap("n")
+
+-- keymap("n", "<Esc>", ":nohl<CR>", { desc = "Clear search highlights" })
 
 keymap("n", "<leader>tv", "<C-w>v", { desc = "Split window vertically"})
 keymap("n", "<leader>th", "<C-w>s", { desc = "Split window horizontally"})
