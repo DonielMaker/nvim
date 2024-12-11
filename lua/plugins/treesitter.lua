@@ -39,7 +39,6 @@ return {
                     "query",
                     "c",
                     "rust",
-                    "slint",
                     "regex",
                     "slint",
                 },
