@@ -18,30 +18,30 @@ return {
                 indent = { enable = true },
                 -- Automatically install missing parsers when entering buffer
                 -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-                auto_install = true,
+                -- auto_install = true,
                 -- List of parsers to ignore installing (or "all")
                 ignore_install = {},
                 -- Install parsers synchronously (only applied to `ensure_installed`)
                 sync_install = false,
                 -- ensure these language parsers are installed
-                ensure_installed = {
-                    "json",
-                    "javascript",
-                    "tsx",
-                    "yaml",
-                    "html",
-                    "css",
-                    "markdown",
-                    "markdown_inline",
-                    "bash",
-                    "lua",
-                    "gitignore",
-                    "query",
-                    "c",
-                    "rust",
-                    "regex",
-                    "slint",
-                },
+                -- ensure_installed = {
+                --     "json",
+                --     "javascript",
+                --     "tsx",
+                --     "yaml",
+                --     "html",
+                --     "css",
+                --     "markdown",
+                --     "markdown_inline",
+                --     "bash",
+                --     "lua",
+                --     "gitignore",
+                --     "query",
+                --     "c",
+                --     "rust",
+                --     "regex",
+                --     "slint",
+                -- },
                 incremental_selection = {
                     enable = true,
                     keymaps = {
