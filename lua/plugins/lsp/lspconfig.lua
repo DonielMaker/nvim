@@ -20,6 +20,7 @@ return {
             lspconfig.lua_ls.setup{capabilitites}
             lspconfig.rust_analyzer.setup{capabilitites}
             lspconfig.nil_ls.setup({capabilitites})
+            lspconfig.ts_ls.setup({capabilitites})
         end
     }
 }
