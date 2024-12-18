@@ -27,26 +27,26 @@ return {
 
             mason_lspconfig.setup({
                 -- list of servers for mason to install
-                ensure_installed = {
-                    -- Webdev
-                    "html",
-                    "cssls",
-                    "ts_ls",
-
-                    -- Lua
-                    "lua_ls",
-
-                    -- Rust
-                    "rust_analyzer",
-
-                    "tinymist",
-                },
+                -- ensure_installed = {
+                --     -- Webdev
+                --     "html",
+                --     "cssls",
+                --     "ts_ls",
+                --
+                --     -- Lua
+                --     "lua_ls",
+                --
+                --     -- Rust
+                --     "rust_analyzer",
+                --
+                --     "tinymist",
+                -- },
             })
 
             mason_tool_installer.setup({
-                ensure_installed = {
-                    "stylua", -- lua formatter
-                },
+                -- ensure_installed = {
+                --     "stylua", -- lua formatter
+                -- },
             })
         end,
     }
