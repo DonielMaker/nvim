@@ -20,7 +20,13 @@ return {
                 rust_analyzer = {},
                 nil_ls = {},
                 ts_ls = {},
-                cssls = {},
+                cssls = {
+                    settings = {
+                        css = { validate = true; },
+                        scss = { validate = true; },
+                        less = { validate = true; },
+                    }
+                },
                 bashls = {},
             }
         },
