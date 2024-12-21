@@ -24,8 +24,8 @@ return {
             local keymap = vim.keymap.set -- for consiceness
 
             keymap("n", "<leader>sf", "<cmd>Telescope find_files<cr>", { desc = "Search files"})
-            keymap("n", "<leader>sg", "<cmd>Telescope git_files<cr>", { desc = "Search git files"})
             keymap("n", "<leader>sr", "<cmd>Telescope live_grep<cr>", { desc = "Live grep"})
+            keymap("n", "<leader>sh", "<cmd>Telescope help_tags<cr>", { desc = "Live grep"})
         end
     }
 }
