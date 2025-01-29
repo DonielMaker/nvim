@@ -35,6 +35,60 @@ return {
             local lspconfig = require("lspconfig")
             local capabilities = require("blink.cmp").get_lsp_capabilities()
 
+            local keymap = vim.keymap.set
+
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+                callback = function(ev)
+                    -- Buffer local mappings.
+                    -- See `:help vim.lsp.*` for documentation on any of the below functions
+                    local opts = { buffer = ev.buf, silent = true }
+
+                    opts.desc = "Show LSP references"
+                    keymap("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+
+                    opts.desc = "Go to declaration"
+                    keymap("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
+
+                    opts.desc = "Show LSP definitions"
+                    keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
+
+                    opts.desc = "Show LSP implementations"
+                    keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
+
+                    opts.desc = "Show LSP type definitions"
+                    keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+
+                    opts.desc = "See available code actions"
+                    keymap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+
+                    opts.desc = "Show documentation for what is under cursor"
+                    keymap("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+
+                    opts.desc = "Rename all occurences"
+                    keymap("n", "gr", vim.lsp.buf.rename, opts)
+
+                    -- opts.desc = "Restart LSP"
+                    -- keymap("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+                    -- INFO: Trouble does this already
+                    --
+                    -- opts.desc = "Show buffer diagnostics"
+                    -- keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+                    --
+                    -- opts.desc = "Show line diagnostics"
+                    -- keymap("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+                    --
+                    -- opts.desc = "Go to previous diagnostic"
+                    -- keymap("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+                    --
+                    -- opts.desc = "Go to next diagnostic"
+                    -- keymap("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+
+                end,
+            })
+
+
             -- Creates icons at the left side
             local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
             for type, icon in pairs(signs) do
