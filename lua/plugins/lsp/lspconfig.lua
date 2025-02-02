@@ -67,24 +67,6 @@ return {
 
                     opts.desc = "Rename all occurences"
                     keymap("n", "gr", vim.lsp.buf.rename, opts)
-
-                    -- opts.desc = "Restart LSP"
-                    -- keymap("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-
-                    -- INFO: Trouble does this already
-                    --
-                    -- opts.desc = "Show buffer diagnostics"
-                    -- keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
-                    --
-                    -- opts.desc = "Show line diagnostics"
-                    -- keymap("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
-                    --
-                    -- opts.desc = "Go to previous diagnostic"
-                    -- keymap("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-                    --
-                    -- opts.desc = "Go to next diagnostic"
-                    -- keymap("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
-
                 end,
             })
 
