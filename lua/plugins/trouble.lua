@@ -16,7 +16,7 @@ return {
             local keymap = vim.keymap.set
 
             keymap("n", "<leader>xd", "<cmd>Trouble diagnostics filter.buf=0<CR>", { desc = "Open trouble document diagnostics"})
-            keymap("n", "<leader>xt", "<cmd>Trouble todo toggle<CR>", { desc = "Open todos in trouble" })
+            -- keymap("n", "<leader>xt", "<cmd>Trouble todo toggle<CR>", { desc = "Open todos in trouble" })
         end,
     }
 }
