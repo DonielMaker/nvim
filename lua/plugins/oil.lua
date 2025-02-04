@@ -12,10 +12,16 @@ return {
 
             local keymap = vim.keymap.set
 
-            keymap("n", "<leader>ff", "<CMD>Oil<CR>", {desc = "Open parent dir"})
-            vim.api.nvim_create_autocmd("BufEnter", {
-
-            })
+            keymap("n", "<leader>ff", "<CMD>Oil<CR>", {desc = "Open parent dir", buffer = true})
+            --
+            -- vim.api.nvim_create_autocmd("Filetype", {
+            --     pattern = "oil",
+            --     callback = function ()
+            --         -- require("oil.actions").preview.callback()
+            --
+            --         -- keymap("n", "<leader>ff",  "<CMD>b#<CR>", {desc = "Close oil"})
+            --     end
+            -- })
 
             oil.setup({
                 -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
