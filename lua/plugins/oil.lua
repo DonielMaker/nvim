@@ -1,9 +1,9 @@
 return {
     {
         'stevearc/oil.nvim',
-        ---@module 'oil'
-        ---@type oil.SetupOpts
-        opts = {},
+        -- ---@module 'oil'
+        -- ---@type oil.SetupOpts
+        -- opts = {},
         dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
         -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
         lazy = false,
@@ -12,16 +12,7 @@ return {
 
             local keymap = vim.keymap.set
 
-            keymap("n", "<leader>ff", "<CMD>Oil<CR>", {desc = "Open parent dir", buffer = true})
-            --
-            -- vim.api.nvim_create_autocmd("Filetype", {
-            --     pattern = "oil",
-            --     callback = function ()
-            --         -- require("oil.actions").preview.callback()
-            --
-            --         -- keymap("n", "<leader>ff",  "<CMD>b#<CR>", {desc = "Close oil"})
-            --     end
-            -- })
+            keymap("n", "<leader>ff", "<CMD>Oil<CR>", {desc = "Open parent dir"})
 
             oil.setup({
                 -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
@@ -83,21 +74,22 @@ return {
                 -- Set to `false` to remove a keymap
                 -- See :help oil-actions for a list of all available actions
                 keymaps = {
+                    ["<leader>ff"] = {"actions.close", mode = "n"},
                     ["g?"] = { "actions.show_help", mode = "n" },
                     ["<CR>"] = "actions.select",
                     ["<C-p>"] = "actions.preview",
                     ["<C-c>"] = { "actions.close", mode = "n" },
                     ["<C-l>"] = "actions.refresh",
-                    ["-"] = { "actions.parent", mode = "n" },
-                    ["_"] = { "actions.open_cwd", mode = "n" },
-                    ["`"] = { "actions.cd", mode = "n" },
-                    ["~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
+                    -- ["-"] = { "actions.parent", mode = "n" },
+                    -- ["_"] = { "actions.open_cwd", mode = "n" },
+                    -- ["`"] = { "actions.cd", mode = "n" },
+                    -- ["~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
                     ["gs"] = { "actions.change_sort", mode = "n" },
                     ["gx"] = "actions.open_external",
                     ["g."] = { "actions.toggle_hidden", mode = "n" },
                 },
                 -- Set to false to disable all of the above keymaps
-                use_default_keymaps = true,
+                use_default_keymaps = false,
                 view_options = {
                     -- Show files and directories that start with "."
                     show_hidden = true,
