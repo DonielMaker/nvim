@@ -1,8 +1,8 @@
 return {
     {
         'neovim/nvim-lspconfig',
+        event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
-            -- 'hrsh7th/cmp-nvim-lsp',
             {
                 'folke/lazydev.nvim',
                 ft = "lua",
@@ -14,28 +14,14 @@ return {
             }
         },
 
-        opts = {
-            servers = {
-                lua_ls = {},
-                rust_analyzer = {},
-                nil_ls = {},
-                ts_ls = {},
-                cssls = {
-                    settings = {
-                        css = { validate = true; },
-                        scss = { validate = true; },
-                        less = { validate = true; },
-                    }
-                },
-                bashls = {},
-            }
-        },
-
-        config = function(_, opts)
+        config = function()
             local lspconfig = require("lspconfig")
-            local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-            local keymap = vim.keymap.set
+            local mason_lspconfig = require("mason-lspconfig")
+
+            -- local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+            local keymap = vim.keymap.set -- for conciseness
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -65,24 +51,85 @@ return {
                     opts.desc = "Show documentation for what is under cursor"
                     keymap("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
-                    opts.desc = "Rename all occurences"
-                    keymap("n", "gr", vim.lsp.buf.rename, opts)
+                    -- opts.desc = "Restart LSP"
+                    -- keymap("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+                    -- INFO: Trouble does this already
+                    --
+                    -- opts.desc = "Show buffer diagnostics"
+                    -- keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+                    --
+                    -- opts.desc = "Show line diagnostics"
+                    -- keymap("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+                    --
+                    -- opts.desc = "Go to previous diagnostic"
+                    -- keymap("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+                    --
+                    -- opts.desc = "Go to next diagnostic"
+                    -- keymap("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+
                 end,
             })
 
+            -- used to enable autocompletion (assign to every lsp server config)
+            local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-            -- Creates icons at the left side
+            -- Change the Diagnostic symbols in the sign column (gutter)
+            -- (not in youtube nvim video)
             local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
             for type, icon in pairs(signs) do
                 local hl = "DiagnosticSign" .. type
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
             end
 
-            -- Create lsp based on settings defined in opts
-            for server, config in pairs(opts.servers) do
-                config.capabilities = capabilities
-                lspconfig[server].setup{config}
-            end
-        end
+            mason_lspconfig.setup_handlers({
+                -- default handler for installed servers
+                function(server_name)
+                    lspconfig[server_name].setup({
+                        capabilities = capabilities,
+                    })
+                end,
+                ["tinymist"] = function ()
+                    lspconfig["tinymist"].setup({
+                        capabilities = capabilities,
+                        root_dir = vim.fn.getcwd(),
+                        offset_encoding = "utf-8",
+                    })
+                end,
+                ["lua_ls"] = function()
+                    lspconfig["lua_ls"].setup({
+                        capabilities = capabilities,
+                        settings = {
+                            Lua = {
+                                -- make the language server recognize "vim" global
+                                diagnostics = {
+                                    globals = { "vim" },
+                                },
+                                completion = {
+                                    callSnippet = "Replace",
+                                },
+                            },
+                        },
+                    })
+                end,
+                ["rust_analyzer"] = function()
+                    lspconfig["rust_analyzer"].setup({
+                        capabilities = capabilities,
+                        settings = {
+                            cargo = {
+                                allFeatures = true,
+                            },
+                            checkOnSave = {
+                                allFeatures = true,
+                                command = "clippy",
+                                extraArgs = { "--no-deps"},
+                            }
+                        }
+                    })
+                end,
+            })
+
+
+        end,
     }
 }
