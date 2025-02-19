@@ -16,6 +16,7 @@ return {
 
         opts = {
             servers = {
+                marksman = {},
                 texlab = {},
                 lua_ls = {},
                 rust_analyzer = {},
