@@ -17,7 +17,7 @@ return {
             oil.setup({
                 -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
                 -- Set to false if you want some other plugin (e.g. netrw) to open when you edit directories.
-                default_file_explorer = false,
+                default_file_explorer = true,
                 -- Id is automatically added at the beginning, and name at the end
                 -- See :help oil-columns
                 columns = {
@@ -45,7 +45,7 @@ return {
                 -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
                 delete_to_trash = false,
                 -- Skip the confirmation popup for simple operations (:help oil.skip_confirm_for_simple_edits)
-                skip_confirm_for_simple_edits = false,
+                skip_confirm_for_simple_edits = true,
                 -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
                 -- (:help prompt_save_on_select_new_entry)
                 prompt_save_on_select_new_entry = true,
@@ -80,11 +80,11 @@ return {
                     ["<C-p>"] = "actions.preview",
                     ["<C-c>"] = { "actions.close", mode = "n" },
                     ["<C-l>"] = "actions.refresh",
-                    -- ["-"] = { "actions.parent", mode = "n" },
-                    -- ["_"] = { "actions.open_cwd", mode = "n" },
+                    ["-"] = { "actions.parent", mode = "n" },
+                    ["_"] = { "actions.open_cwd", mode = "n" },
                     -- ["`"] = { "actions.cd", mode = "n" },
                     -- ["~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
-                    ["gs"] = { "actions.change_sort", mode = "n" },
+                    -- ["gs"] = { "actions.change_sort", mode = "n" },
                     ["gx"] = "actions.open_external",
                     ["g."] = { "actions.toggle_hidden", mode = "n" },
                 },
