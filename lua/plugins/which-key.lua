@@ -8,6 +8,7 @@ return {
         end,
         config = function()
             local wk = require("which-key")
+
             wk.add({
                 { "<leader>s", group = "Search"},
                 { "<leader>f", group = "File explorer"},
