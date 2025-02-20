@@ -24,3 +24,6 @@ keymap("n", "<C-=>", "<C-w>=", { desc = "Equal Dimensions"})
 -- keymap("n", "<S-l>", "<C-w><", { desc = "Decrease window width"})
 
 keymap("n", "<leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle Terminal"})
+
+
+keymap("n", "<leader>dd", function() require("snacks").dashboard() end, { desc = "load the dashboard"})
