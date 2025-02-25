@@ -2,7 +2,7 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     opts = {
-        image = {},
+        -- image = {},
         dashboard = {
             width = 60,
             row = nil, -- dashboard position. nil for center
