@@ -17,10 +17,10 @@ return {
         opts = {
             servers = {
                 marksman = {},
-                texlab = {},
+                -- texlab = {},
+                nixd = {},
                 lua_ls = {},
                 rust_analyzer = {},
-                nil_ls = {},
                 ts_ls = {},
                 cssls = {
                     settings = {
