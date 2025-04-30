@@ -8,6 +8,7 @@ return {
             term.setup({
                 direction = "horizontal",
                 size = 25,
+                shell = "zsh",
             })
 
             local keymap = vim.keymap.set
