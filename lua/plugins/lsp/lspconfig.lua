@@ -2,7 +2,6 @@ return {
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            -- 'hrsh7th/cmp-nvim-lsp',
             {
                 'folke/lazydev.nvim',
                 ft = "lua",
@@ -18,10 +17,13 @@ return {
             servers = {
                 marksman = {},
                 -- texlab = {},
+                yamlls = {},
+
                 nixd = {},
                 lua_ls = {},
                 rust_analyzer = {},
-                ts_ls = {},
+                vtsls = {},
+                -- ts_ls = {},
                 cssls = {
                     settings = {
                         css = { validate = true; },
@@ -30,21 +32,18 @@ return {
                     }
                 },
                 bashls = {},
+                qmlls = {},
             }
         },
 
         config = function(_, opts)
-            local lspconfig = require("lspconfig")
-            local capabilities = require("blink.cmp").get_lsp_capabilities()
-
-            local keymap = vim.keymap.set
-
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("UserLspConfig", {}),
                 callback = function(ev)
                     -- Buffer local mappings.
                     -- See `:help vim.lsp.*` for documentation on any of the below functions
                     local opts = { buffer = ev.buf, silent = true }
+                    local keymap = vim.keymap.set
 
                     opts.desc = "Show LSP references"
                     keymap("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
@@ -68,23 +67,29 @@ return {
                     keymap("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
                     opts.desc = "Rename all occurences"
-                    keymap("n", "gr", vim.lsp.buf.rename, opts)
+                    keymap("n", "gr", vim.lsp.buf.rename, opts) -- rename a variable globally
                 end,
             })
 
-
-            -- Creates icons at the left side
-            local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-            end
+            -- Create all the left side icons based on their severity
+            vim.diagnostic.config({
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = " ",
+                        [vim.diagnostic.severity.WARN] = " ",
+                        [vim.diagnostic.severity.HINT] = "󰠠 ",
+                        [vim.diagnostic.severity.INFO] = " ",
+                    }
+                }
+            })
 
             -- Create lsp based on settings defined in opts
             for server, config in pairs(opts.servers) do
-                config.capabilities = capabilities
-                lspconfig[server].setup{config}
+                vim.lsp.config[server] = config
+                vim.lsp.enable(server)
             end
         end
     }
+
 }
+
