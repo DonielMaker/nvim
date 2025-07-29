@@ -9,7 +9,7 @@ return {
                 ["<Up>"] = {"select_prev", "fallback"},
                 ["<Down>"] = {"select_next", "fallback"},
                 ["<C-Space>"] = {"show", "show_documentation", "hide_documentation"},
-                ["<Tab>"] = {"select_and_accept", "fallback"},
+                ["<C-Enter>"] = {"select_and_accept", "fallback"},
                 -- ["<C-CR>"] = {"select_and_accept", "fallback"},
             },
 
