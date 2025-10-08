@@ -1,8 +1,8 @@
 return {
     {
         'saghen/blink.cmp',
-        -- dependencies = 'rafamadriz/friendly-snippets',
-        version = 'v0.12.0',
+        build = "cargo build --release",
+        version = "1.6.0",
 
         opts = {
             keymap = {
@@ -10,26 +10,22 @@ return {
                 ["<Down>"] = {"select_next", "fallback"},
                 ["<C-Space>"] = {"show", "show_documentation", "hide_documentation"},
                 ["<C-Enter>"] = {"select_and_accept", "fallback"},
-                -- ["<C-CR>"] = {"select_and_accept", "fallback"},
             },
 
             appearance = {
-                -- use_nvim_cmp_as_default = true,
                 nerd_font_variant = 'normal'
             },
 
             completion = {
-                documentation = {
-                    auto_show = true,
-                    auto_show_delay_ms = 500,
-                },
+                documentation = { auto_show = false },
 
-                ghost_text = {enabled = true,},
+                ghost_text = {enabled = false},
             },
 
-            signature = { enabled = true }
-        },
+            signature = { enabled = true },
 
-        opts_extend = { "sources.default" }
+            fuzzy = { implementation = "lua" },
+
+        },
     },
 }

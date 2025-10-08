@@ -57,6 +57,12 @@ return {
                 { section = "keys", gap = 1, padding = 1 },
                 { section = "startup" },
             },
-        }
+        },
+        -- indent = {
+        --     animate = { enabled = false },
+        --     char = "┊",
+        -- },
+        -- input = {},
+        -- notifier = {},
     }
 }

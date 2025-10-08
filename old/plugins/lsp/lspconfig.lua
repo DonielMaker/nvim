@@ -17,6 +17,7 @@ return {
             servers = {
                 marksman = {},
                 -- texlab = {},
+                tinymist = {},
                 yamlls = {},
 
                 nixd = {},
@@ -37,18 +38,13 @@ return {
         },
 
         config = function(_, opts)
-            local lspconfig = require("lspconfig")
-            local capabilities = require("blink.cmp").get_lsp_capabilities()
-            capabilities.textDocument.completion.completionItem.snippetSupport = false
-
-            local keymap = vim.keymap.set
-
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("UserLspConfig", {}),
                 callback = function(ev)
                     -- Buffer local mappings.
                     -- See `:help vim.lsp.*` for documentation on any of the below functions
                     local opts = { buffer = ev.buf, silent = true }
+                    local keymap = vim.keymap.set
 
                     opts.desc = "Show LSP references"
                     keymap("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
@@ -72,7 +68,7 @@ return {
                     keymap("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
                     opts.desc = "Rename all occurences"
-                    keymap("n", "gr", vim.lsp.buf.rename, opts)
+                    keymap("n", "gr", vim.lsp.buf.rename, opts) -- rename a variable globally
                 end,
             })
 
@@ -90,9 +86,11 @@ return {
 
             -- Create lsp based on settings defined in opts
             for server, config in pairs(opts.servers) do
-                config.capabilities = capabilities
-                lspconfig[server].setup{config}
+                vim.lsp.config[server] = config
+                vim.lsp.enable(server)
             end
         end
     }
+
 }
+

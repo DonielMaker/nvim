@@ -1,0 +1,56 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "rev": "8483171",
+      "src": "https://github.com/saghen/blink.cmp"
+    },
+    "dressing.nvim": {
+      "rev": "2d7c2db",
+      "src": "https://github.com/stevearc/dressing.nvim"
+    },
+    "fzf-lua": {
+      "rev": "c0c0926",
+      "src": "https://github.com/ibhagwan/fzf-lua"
+    },
+    "lualine.nvim": {
+      "rev": "b8c2315",
+      "src": "https://github.com/nvim-lualine/lualine.nvim"
+    },
+    "nvim": {
+      "rev": "af58927",
+      "src": "https://github.com/catppuccin/nvim"
+    },
+    "nvim-autopairs": {
+      "rev": "23320e7",
+      "src": "https://github.com/windwp/nvim-autopairs"
+    },
+    "nvim-treesitter": {
+      "rev": "42fc28ba",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "nvim-ts-autotag": {
+      "rev": "c4ca798",
+      "src": "https://github.com/windwp/nvim-ts-autotag"
+    },
+    "nvim-web-devicons": {
+      "rev": "b8221e4",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "oil.nvim": {
+      "rev": "919e155",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "todo-comments.nvim": {
+      "rev": "304a8d2",
+      "src": "https://github.com/folke/todo-comments.nvim"
+    },
+    "trouble.nvim": {
+      "rev": "f176232",
+      "src": "https://github.com/folke/trouble.nvim"
+    },
+    "which-key.nvim": {
+      "rev": "904308e",
+      "src": "https://github.com/folke/which-key.nvim"
+    }
+  }
+}
