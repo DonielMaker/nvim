@@ -27,7 +27,7 @@ vim.o.splitright = true -- split vertical window to the right
 vim.o.splitbelow = true -- split horizontal window to the bottom
 
 vim.pack.add({
-    {src = "https://github.com/catppuccin/nvim"},
+    {src = "https://github.com/folke/tokyonight.nvim"},
     {src = "https://github.com/nvim-tree/nvim-web-devicons"},
     {src = "https://github.com/windwp/nvim-autopairs"},
     {src = "https://github.com/windwp/nvim-ts-autotag"},
@@ -43,7 +43,7 @@ vim.pack.add({
     {src = "https://github.com/stevearc/dressing.nvim"},
 })
 
-vim.cmd.colorscheme "catppuccin-macchiato"
+vim.cmd.colorscheme "tokyonight-storm"
 
 require("nvim-web-devicons").setup()
 

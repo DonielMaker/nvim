@@ -52,6 +52,10 @@
       "rev": "304a8d2",
       "src": "https://github.com/folke/todo-comments.nvim"
     },
+    "tokyonight.nvim": {
+      "rev": "00d92e6",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    },
     "trouble.nvim": {
       "rev": "f176232",
       "src": "https://github.com/folke/trouble.nvim"
