@@ -66,7 +66,7 @@ require("nvim-autopairs").setup({
 })
 
 require("lualine").setup({
-    options = { theme = "catppuccin-macchiato" }
+    options = { theme = "tokyonight-storm" }
 })
 
 require("nvim-treesitter.configs").setup({
