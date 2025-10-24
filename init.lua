@@ -26,6 +26,8 @@ vim.o.backspace = "indent,eol,start" -- allow backspace on indent, end of line o
 vim.o.splitright = true -- split vertical window to the right
 vim.o.splitbelow = true -- split horizontal window to the bottom
 
+vim.o.clipboard = "unnamedplus"
+
 vim.pack.add({
     {src = "https://github.com/folke/tokyonight.nvim"},
     {src = "https://github.com/nvim-tree/nvim-web-devicons"},
