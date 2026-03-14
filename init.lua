@@ -43,6 +43,7 @@ vim.pack.add({
     {src = "https://github.com/neovim/nvim-lspconfig"},
     {src = "https://github.com/saghen/blink.cmp"},
     {src = "https://github.com/stevearc/dressing.nvim"},
+    {src = "https://github.com/chomosuke/typst-preview.nvim"},
 })
 
 vim.cmd.colorscheme "tokyonight-storm"
@@ -201,6 +202,13 @@ require("blink.cmp").setup({
     signature = { enabled = true },
 
     fuzzy = { implementation = "lua" },
+})
+
+require("typst-preview").setup({
+    -- Because typst-preview can't find the binary on nixos
+    dependencies_bin = {
+        ["tinymist"] = "tinymist",
+    },
 })
 
 -- Keybinds
