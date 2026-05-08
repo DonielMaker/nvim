@@ -1,13 +1,13 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.mapleader = " " -- Space as Leader 
+vim.g.maplocalleader = " " -- Space as Localleader
 
-vim.o.number = true
-vim.o.relativenumber = true
+vim.o.number = true -- Shows linenumbers
+vim.o.relativenumber = true -- Shows linenumbers relative to current
 
-vim.o.swapfile = false
-vim.o.wrap = false
+vim.o.swapfile = false -- No Swapfiles
+vim.o.wrap = false -- Text doesn't wrap when exceeding width
 
-vim.o.tabstop = 4
+vim.o.tabstop = 4 -- 4 Space tab
 vim.o.shiftwidth = 0 -- 0 spaces for indent width
 vim.o.expandtab = true -- expand tab to spaces
 vim.o.autoindent = true -- copy indent from current line when starting new one
@@ -15,7 +15,7 @@ vim.o.autoindent = true -- copy indent from current line when starting new one
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
-vim.o.cursorline = true
+vim.o.cursorline = true -- Highlights the whole line the cursor is on
 
 vim.o.termguicolors = true
 vim.o.background = "dark"
@@ -26,24 +26,26 @@ vim.o.backspace = "indent,eol,start" -- allow backspace on indent, end of line o
 vim.o.splitright = true -- split vertical window to the right
 vim.o.splitbelow = true -- split horizontal window to the bottom
 
-vim.o.clipboard = "unnamedplus"
+vim.o.clipboard = "unnamedplus" -- Combines Vim clipboard with System clipboard
 
 vim.pack.add({
-    {src = "https://github.com/folke/tokyonight.nvim"},
-    {src = "https://github.com/nvim-tree/nvim-web-devicons"},
-    {src = "https://github.com/windwp/nvim-autopairs"},
-    {src = "https://github.com/windwp/nvim-ts-autotag"},
-    {src = "https://github.com/nvim-lualine/lualine.nvim"},
-    {src = "https://github.com/nvim-treesitter/nvim-treesitter"},
-    {src = "https://github.com/folke/which-key.nvim"},
-    {src = "https://github.com/folke/trouble.nvim"},
-    {src = "https://github.com/ibhagwan/fzf-lua"},
-    {src = "https://github.com/stevearc/oil.nvim"},
-    {src = "https://github.com/folke/lazydev.nvim"},
-    {src = "https://github.com/neovim/nvim-lspconfig"},
-    {src = "https://github.com/saghen/blink.cmp"},
-    {src = "https://github.com/stevearc/dressing.nvim"},
-    {src = "https://github.com/chomosuke/typst-preview.nvim"},
+    {src = "https://github.com/folke/tokyonight.nvim"}, -- Theme
+    {src = "https://github.com/nvim-tree/nvim-web-devicons"}, -- Nerdicons
+    {src = "https://github.com/windwp/nvim-autopairs"}, -- Parentheses pairing
+    {src = "https://github.com/windwp/nvim-ts-autotag"}, -- Html tag pairing
+    {src = "https://github.com/nvim-lualine/lualine.nvim"}, -- Bottom bar
+    {src = "https://github.com/nvim-treesitter/nvim-treesitter"}, -- Code parsing
+    {src = "https://github.com/folke/which-key.nvim"}, -- Keybind Cheatsheet
+    {src = "https://github.com/folke/trouble.nvim"}, -- Error util
+    {src = "https://github.com/ibhagwan/fzf-lua"}, -- Fuzzyfinder
+    {src = "https://github.com/stevearc/oil.nvim"}, -- File explorer with vim bindings
+    {src = "https://github.com/folke/lazydev.nvim"}, -- Lua Lsp vim runtime
+    {src = "https://github.com/neovim/nvim-lspconfig"}, -- Preconfigured Lsps
+    {src = "https://github.com/saghen/blink.cmp"}, -- Shit Replace with vim.o.completion
+    {src = "https://github.com/stevearc/dressing.nvim"}, -- Deprecated. Migrate to Snacks
+    {src = "https://github.com/chomosuke/typst-preview.nvim"}, -- Typst live preview
+    {src = "https://github.com/epwalsh/obsidian.nvim"}, -- Obsidian interactivity
+    {src = "https://github.com/nvim-lua/plenary.nvim"} -- Plugin Dependency
 })
 
 vim.cmd.colorscheme "tokyonight-storm"
@@ -93,6 +95,7 @@ require("which-key").setup({
 
     win = { border = "rounded" },
 })
+
 require("which-key").add({
     { "<leader>s", group = "Search", icon = ""},
     { "<leader>f", group = "File explorer"},
@@ -129,14 +132,6 @@ require("oil").setup({
     use_default_keymaps = false,
     view_options = {
         show_hidden = true,
-        -- is_hidden_file = function(name, bufnr)
-        --     local m = name:match("^%.")
-        --     return m ~= nil
-        -- end,
-
-        -- is_always_hidden = function(name, bufnr)
-        --     return false
-        -- end,
     },
 })
 
@@ -208,6 +203,19 @@ require("typst-preview").setup({
     -- Because typst-preview can't find the binary on nixos
     dependencies_bin = {
         ["tinymist"] = "tinymist",
+    },
+})
+
+require("obsidian").setup({
+    ui = {
+        enable = false
+    },
+
+    workspaces = {
+        {
+            name = "notes",
+            path = "~/Documents/notes/",
+        },
     },
 })
 
