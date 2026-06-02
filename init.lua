@@ -13,7 +13,7 @@ vim.o.expandtab = true -- expand tab to spaces
 vim.o.autoindent = true -- copy indent from current line when starting new one
 
 vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.o.smartcase = true -- ignorecase until capitalising
 
 vim.o.cursorline = true -- Highlights the whole line the cursor is on
 
