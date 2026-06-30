@@ -230,8 +230,18 @@ require("obsidian").setup({
     },
 })
 
+-- Remove Line Numbers in Terminals
+vim.api.nvim_create_autocmd("TermOpen", {
+    desc = "Remove Line Numbers in Terminals",
+    group = vim.api.nvim_create_augroup("custom-term-open", { clear = true }),
+    callback = function ()
+        vim.opt.number = false
+        vim.opt.relativenumber = false
+    end,
+})
+
 -- Keybinds
-vim.keymap.set("n", "<leader>ff", "<cmd>Oil<cr>", {desc = "Open parent dir"})
+vim.keymap.set("n", "<leader>ff", "<cmd>Oil<cr>", {desc = "Open parent dir" })
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohl<cr>", { desc = "Clear search highlights" })
 
@@ -240,13 +250,23 @@ vim.keymap.set("n", "<leader>sf", "<cmd>FzfLua files<cr>", { desc = "Search File
 vim.keymap.set("n", "<leader>sr", "<cmd>FzfLua grep<cr>", { desc = "Grep Files" })
 vim.keymap.set("n", "<leader>sc", "<cmd>FzfLua files cwd=~/.config<cr>", { desc = "Search .config" })
 
-vim.keymap.set("n", "<leader>tv", "<C-w>v", { desc = "Split window vertically"})
-vim.keymap.set("n", "<leader>th", "<C-w>s", { desc = "Split window horizontally"})
-vim.keymap.set("n", "<leader>tx", "<C-w>q", { desc = "Close current window"})
+vim.keymap.set("n", "<leader>tv", "<C-w>v", { desc = "Split window vertically" })
+vim.keymap.set("n", "<leader>th", "<C-w>s", { desc = "Split window horizontally" })
+vim.keymap.set("n", "<leader>tx", "<C-w>q", { desc = "Close current window" })
 
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Navigate Up"})
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Navigate Down"})
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Navigate Left"})
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Navigate Right"})
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Navigate Up" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Navigate Down" })
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Navigate Left" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Navigate Right" })
 
 vim.keymap.set("n", "<leader>xd", "<cmd>Trouble diagnostics filter.buf=0<cr>", { desc = "Open trouble document diagnostics"})
+
+vim.keymap.set("t", "<Esc>", "<C-\\><C-N>", { desc = "Exit Terminal Mode" })
+
+vim.keymap.set("n", "<leader>tt", function()
+    vim.cmd.vnew()
+    vim.cmd.term()
+    vim.cmd.wincmd("J")
+    vim.api.nvim_win_set_height(0, 20)
+    vim.cmd.startinsert()
+end, { desc = "Open Terminal in the bottom" })
