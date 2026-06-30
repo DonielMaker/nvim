@@ -42,24 +42,28 @@ vim.pack.add({
     {src = "https://github.com/folke/lazydev.nvim"}, -- Lua Lsp vim runtime
     {src = "https://github.com/neovim/nvim-lspconfig"}, -- Preconfigured Lsps
     {src = "https://github.com/saghen/blink.cmp"}, -- Shit Replace with vim.o.completion
-    {src = "https://github.com/stevearc/dressing.nvim"}, -- Deprecated. Migrate to Snacks
+    {src = "https://github.com/saghen/blink.lib"}, -- Shit Replace with vim.o.completion
+    {src = "https://github.com/nvim-lua/plenary.nvim"}, -- Plugin Dependency
+
     {src = "https://github.com/chomosuke/typst-preview.nvim"}, -- Typst live preview
     {src = "https://github.com/epwalsh/obsidian.nvim"}, -- Obsidian interactivity
-    {src = "https://github.com/nvim-lua/plenary.nvim"} -- Plugin Dependency
 })
 
 vim.cmd.colorscheme "tokyonight-storm"
 
+-- Nerdicons
 require("nvim-web-devicons").setup()
 
-require("nvim-ts-autotag").setup({
-    opts = {
-        enable_close = true, -- Auto close tags
-        enable_rename = true, -- Auto rename pairs of tags
-        enable_close_on_slash = true -- Auto close on trailing </
-    }
-})
+-- Auto Html tags (Not constantly needed)
+-- require("nvim-ts-autotag").setup({
+--     opts = {
+--         enable_close = true, -- Auto close tags
+--         enable_rename = true, -- Auto rename pairs of tags
+--         enable_close_on_slash = true -- Auto close on trailing </
+--     }
+-- })
 
+-- Auto brackets and quotes
 require("nvim-autopairs").setup({
     check_ts = true,
     ts_config = {
@@ -68,10 +72,12 @@ require("nvim-autopairs").setup({
     },
 })
 
+-- Better bottom line
 require("lualine").setup({
     options = { theme = "tokyonight-storm" }
 })
 
+-- Code highlighting
 require("nvim-treesitter.configs").setup({
     modules = {},
 
@@ -90,21 +96,25 @@ require("nvim-treesitter.configs").setup({
 })
 
 
+-- Show Keybinds
 require("which-key").setup({
-    preset = "modern",
 
+    preset = "modern",
     win = { border = "rounded" },
 })
 
 require("which-key").add({
+
     { "<leader>s", group = "Search", icon = ""},
     { "<leader>f", group = "File explorer"},
     { "<leader>x", group = "Trouble", icon = ""},
     { "<leader>t", group = "Panes", icon = ""},
 })
 
+-- Error logging (Not really used anymore might deprecate)
 require("trouble").setup({ focus = true, })
 
+-- Fuzzy finder
 require("fzf-lua").setup({
     winopts = {
         backdrop = 100,
@@ -112,6 +122,7 @@ require("fzf-lua").setup({
     }
 })
 
+-- Tui File Explorer with Vim Buffers
 require("oil").setup({
     skip_confirm_for_simple_edits = true,
 
@@ -119,13 +130,11 @@ require("oil").setup({
 
     keymaps = {
         ["<leader>ff"] = {"actions.close", mode = "n"},
+        ["<C-c>"] = { "actions.close", mode = "n" },
         ["g?"] = { "actions.show_help", mode = "n" },
         ["<CR>"] = "actions.select",
         ["<C-p>"] = "actions.preview",
-        ["<C-c>"] = { "actions.close", mode = "n" },
         ["-"] = { "actions.parent", mode = "n" },
-        ["_"] = { "actions.open_cwd", mode = "n" },
-        ["gx"] = "actions.open_external",
         ["g."] = { "actions.toggle_hidden", mode = "n" },
     },
 
@@ -137,7 +146,7 @@ require("oil").setup({
 
 require("lazydev").setup()
 
--- Create all the left side icons based on their severity
+-- Create all the lsp left side icons based on their severity
 vim.diagnostic.config({
     signs = {
         text = {
@@ -174,7 +183,7 @@ for server, config in pairs(servers) do
     vim.lsp.enable(server)
 end
 
-
+-- This sucks ass
 require("blink.cmp").setup({
 
     keymap = {
@@ -200,9 +209,11 @@ require("blink.cmp").setup({
 })
 
 require("typst-preview").setup({
-    -- Because typst-preview can't find the binary on nixos
+    -- Necessary for NixOS. Don't ask why
+    extra_args = { "--verbose" },
     dependencies_bin = {
-        ["tinymist"] = "tinymist",
+        tinymist = "tinymist",
+        websocat = "websocat",
     },
 })
 
@@ -239,4 +250,3 @@ vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Navigate Left"})
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Navigate Right"})
 
 vim.keymap.set("n", "<leader>xd", "<cmd>Trouble diagnostics filter.buf=0<cr>", { desc = "Open trouble document diagnostics"})
--- keymap("n", "<leader>dd", function() require("snacks").dashboard() end, { desc = "load the dashboard"})
