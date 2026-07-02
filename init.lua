@@ -36,13 +36,10 @@ vim.pack.add({
     {src = "https://github.com/nvim-lualine/lualine.nvim"}, -- Bottom bar
     {src = "https://github.com/nvim-treesitter/nvim-treesitter"}, -- Code parsing
     {src = "https://github.com/folke/which-key.nvim"}, -- Keybind Cheatsheet
-    {src = "https://github.com/folke/trouble.nvim"}, -- Error util
     {src = "https://github.com/ibhagwan/fzf-lua"}, -- Fuzzyfinder
     {src = "https://github.com/stevearc/oil.nvim"}, -- File explorer with vim bindings
     {src = "https://github.com/folke/lazydev.nvim"}, -- Lua Lsp vim runtime
     {src = "https://github.com/neovim/nvim-lspconfig"}, -- Preconfigured Lsps
-    {src = "https://github.com/saghen/blink.cmp"}, -- Shit Replace with vim.o.completion
-    {src = "https://github.com/saghen/blink.lib"}, -- Shit Replace with vim.o.completion
     {src = "https://github.com/nvim-lua/plenary.nvim"}, -- Plugin Dependency
 
     {src = "https://github.com/chomosuke/typst-preview.nvim"}, -- Typst live preview
@@ -111,15 +108,34 @@ require("which-key").add({
     { "<leader>t", group = "Panes", icon = ""},
 })
 
--- Error logging (Not really used anymore might deprecate)
-require("trouble").setup({ focus = true, })
-
 -- Fuzzy finder
 require("fzf-lua").setup({
     winopts = {
         backdrop = 100,
         fullscreen = true,
     }
+})
+
+require("typst-preview").setup({
+    -- Necessary for NixOS. Don't ask why
+    extra_args = { "--verbose" },
+    dependencies_bin = {
+        tinymist = "tinymist",
+        websocat = "websocat",
+    },
+})
+
+require("obsidian").setup({
+    ui = {
+        enable = false
+    },
+
+    workspaces = {
+        {
+            name = "notes",
+            path = "~/Documents/notes/",
+        },
+    },
 })
 
 -- Tui File Explorer with Vim Buffers
@@ -146,7 +162,7 @@ require("oil").setup({
 
 require("lazydev").setup()
 
--- Create all the lsp left side icons based on their severity
+-- Create all the diagnostic icons based on their severity
 vim.diagnostic.config({
     signs = {
         text = {
@@ -183,52 +199,34 @@ for server, config in pairs(servers) do
     vim.lsp.enable(server)
 end
 
--- This sucks ass
-require("blink.cmp").setup({
+-- Autocompletion
+vim.o.autocomplete = true
 
-    keymap = {
-        ["<Up>"] = {"select_prev", "fallback"},
-        ["<Down>"] = {"select_next", "fallback"},
-        ["<C-Space>"] = {"show", "show_documentation", "hide_documentation"},
-        ["<C-Enter>"] = {"select_and_accept", "fallback"},
-    },
-
-    appearance = {
-        nerd_font_variant = 'normal'
-    },
-
-    completion = {
-        documentation = { auto_show = false },
-
-        ghost_text = {enabled = false},
-    },
-
-    signature = { enabled = true },
-
-    fuzzy = { implementation = "lua" },
+vim.api.nvim_create_autocmd( 'LspAttach', {
+    callback = function(ev)
+        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+        if client:supports_method('textDocument/completion') then
+            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+        end
+    end
 })
 
-require("typst-preview").setup({
-    -- Necessary for NixOS. Don't ask why
-    extra_args = { "--verbose" },
-    dependencies_bin = {
-        tinymist = "tinymist",
-        websocat = "websocat",
-    },
-})
+vim.opt.complete:append('o')
 
-require("obsidian").setup({
-    ui = {
-        enable = false
-    },
+vim.opt.completeopt = { 'menuone', 'noselect' }
 
-    workspaces = {
-        {
-            name = "notes",
-            path = "~/Documents/notes/",
-        },
-    },
-})
+vim.o.pumheight = 7
+
+-- Terminal
+vim.keymap.set("t", "<Esc>", "<C-\\><C-N>", { desc = "Exit Terminal Mode" })
+
+vim.keymap.set("n", "<leader>tt", function()
+    vim.cmd.vnew()
+    vim.cmd.term()
+    vim.cmd.wincmd("J")
+    vim.api.nvim_win_set_height(0, 20)
+    vim.cmd.startinsert()
+end, { desc = "Open Terminal in the bottom" })
 
 -- Remove Line Numbers in Terminals
 vim.api.nvim_create_autocmd("TermOpen", {
@@ -259,14 +257,4 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Navigate Down" })
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Navigate Left" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Navigate Right" })
 
-vim.keymap.set("n", "<leader>xd", "<cmd>Trouble diagnostics filter.buf=0<cr>", { desc = "Open trouble document diagnostics"})
-
-vim.keymap.set("t", "<Esc>", "<C-\\><C-N>", { desc = "Exit Terminal Mode" })
-
-vim.keymap.set("n", "<leader>tt", function()
-    vim.cmd.vnew()
-    vim.cmd.term()
-    vim.cmd.wincmd("J")
-    vim.api.nvim_win_set_height(0, 20)
-    vim.cmd.startinsert()
-end, { desc = "Open Terminal in the bottom" })
+vim.keymap.set("n", "gl", vim.diagnostic.open_float)
