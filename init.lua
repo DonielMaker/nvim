@@ -6,6 +6,7 @@ vim.o.number = true -- Shows linenumbers
 vim.o.relativenumber = true -- Shows linenumbers relative to current
 
 vim.o.swapfile = false -- No Swapfiles
+
 vim.o.wrap = false -- Text doesn't wrap when exceeding width
 
 vim.o.tabstop = 4 -- 4 Space tab
@@ -29,178 +30,7 @@ vim.o.splitbelow = true -- split horizontal window to the bottom
 
 vim.o.clipboard = "unnamedplus" -- Combines Vim clipboard with System clipboard
 
--- == Plugins ==
-vim.pack.add({
-    {src = "https://github.com/folke/tokyonight.nvim"}, -- Theme
-    {src = "https://github.com/nvim-tree/nvim-web-devicons"}, -- Nerdicons
-    {src = "https://github.com/windwp/nvim-autopairs"}, -- Parentheses pairing
-    {src = "https://github.com/windwp/nvim-ts-autotag"}, -- Html tag pairing
-    {src = "https://github.com/nvim-lualine/lualine.nvim"}, -- Bottom bar
-    {src = "https://github.com/nvim-treesitter/nvim-treesitter"}, -- Code parsing
-    {src = "https://github.com/folke/which-key.nvim"}, -- Keybind Cheatsheet
-    {src = "https://github.com/ibhagwan/fzf-lua"}, -- Fuzzyfinder
-    {src = "https://github.com/stevearc/oil.nvim"}, -- File explorer with vim bindings
-    {src = "https://github.com/neovim/nvim-lspconfig"}, -- Preconfigured Lsps
-    {src = "https://github.com/nvim-lua/plenary.nvim"}, -- Plugin Dependency
-
-    {src = "https://github.com/chomosuke/typst-preview.nvim"}, -- Typst live preview
-    {src = "https://github.com/epwalsh/obsidian.nvim"}, -- Obsidian interactivity
-})
-
-vim.cmd.colorscheme "tokyonight-storm"
-
--- Nerdicons
-require("nvim-web-devicons").setup()
-
--- Auto Html tags (Not constantly needed. Might need to add some sort of autocmd)
--- require("nvim-ts-autotag").setup({
---     opts = {
---         enable_close = true, -- Auto close tags
---         enable_rename = true, -- Auto rename pairs of tags
---         enable_close_on_slash = true -- Auto close on trailing </
---     }
--- })
-
--- Auto brackets and quotes
-require("nvim-autopairs").setup({
-    check_ts = true,
-    ts_config = {
-        lua = { "string" },
-        javascript = { "template_string" },
-    },
-})
-
--- Better bottom line
-require("lualine").setup({
-    options = { theme = "tokyonight-storm" }
-})
-
--- Code highlighting
-require("nvim-treesitter.configs").setup({
-    modules = {},
-
-    highlight = { enable = true, },
-
-    indent = { enable = true },
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-        },
-    },
-})
-
--- Show Keybinds
-require("which-key").setup({
-
-    preset = "modern",
-    win = { border = "rounded" },
-})
-
-require("which-key").add({
-
-    { "<leader>s", group = "Search", icon = ""},
-    { "<leader>f", group = "File explorer"},
-    { "<leader>t", group = "Panes", icon = ""},
-    { "<leader>o", group = "Obsidian", icon = "󱨠"},
-})
-
--- Fuzzy finder
-require("fzf-lua").setup({
-    winopts = {
-        backdrop = 100,
-        fullscreen = true,
-    }
-})
-
-vim.keymap.set("n", "<leader>ss", "<cmd>FzfLua<cr>", { desc = "FzfLua" })
-vim.keymap.set("n", "<leader>sf", "<cmd>FzfLua files<cr>", { desc = "Search Files" })
-vim.keymap.set("n", "<leader>sr", "<cmd>FzfLua grep<cr>", { desc = "Grep Files" })
-vim.keymap.set("n", "<leader>sc", "<cmd>FzfLua files cwd=~/.config<cr>", { desc = "Search .config" })
-
-require("typst-preview").setup({
-    -- Necessary for NixOS. Don't ask why
-    extra_args = { "--verbose" },
-    dependencies_bin = {
-        tinymist = "tinymist",
-        websocat = "websocat",
-    },
-})
-
--- Tui File Explorer with Vim Buffers
-require("oil").setup({
-    skip_confirm_for_simple_edits = true,
-
-    prompt_save_on_select_new_entry = true,
-
-    keymaps = {
-        ["<leader>ff"] = {"actions.close", mode = "n"},
-        ["<C-c>"] = { "actions.close", mode = "n" },
-        ["g?"] = { "actions.show_help", mode = "n" },
-        ["<CR>"] = "actions.select",
-        ["<C-p>"] = "actions.preview",
-        ["-"] = { "actions.parent", mode = "n" },
-        ["g."] = { "actions.toggle_hidden", mode = "n" },
-    },
-
-    use_default_keymaps = false,
-    view_options = {
-        show_hidden = true,
-    },
-})
-
-vim.keymap.set("n", "<leader>ff", "<cmd>Oil<cr>", {desc = "Open parent dir" })
-
--- == Obsidian ==
-require("obsidian").setup({
-    ui = {
-        enable = false
-    },
-
-    workspaces = {
-        {
-            name = "notes",
-            path = "~/Documents/notes/",
-        },
-    },
-
-    mappings = {
-        -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-        ["gf"] = {
-            action = function()
-                return require("obsidian").util.gf_passthrough()
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
-        },
-        -- Smart action depending on context, either follow link or toggle checkbox.
-        ["<cr>"] = {
-            action = function()
-                return require("obsidian").util.smart_action()
-            end,
-            opts = { buffer = true, expr = true },
-        }
-    },
-
-    -- Creates note with 12 random digits 385018402918
-    note_id_func = function()
-
-        local suffix = ""
-
-        for _ = 1, 12 do
-            suffix = suffix .. string.char(math.random(48, 57))
-        end
-
-        return suffix
-    end,
-})
-
-vim.keymap.set("n", "<leader>so", "<cmd>ObsidianSearch<cr>", { desc = "Search Obsidian vault" })
-vim.keymap.set("n", "<leader>on", "<cmd>ObsidianNew<cr>", { desc = "Create new note" })
-vim.keymap.set("n", "<leader>oo", "<cmd>ObsidianOpen<cr>", { desc = "Open a Note in Obsidian" })
-
+vim.keymap.set("n", "<Esc>", "<cmd>nohl<cr>", { desc = "Clear search highlights" })
 
 -- == LSP ==
 local servers = {
@@ -211,8 +41,8 @@ local servers = {
     lua_ls = {
         settings = {
             Lua = {
-                diagnostics = {
-                    globals = { "vim" }
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file("", true)
                 }
             }
         }
@@ -248,37 +78,31 @@ vim.diagnostic.config({
     }
 })
 
+-- Show current diagnostic
 vim.keymap.set("n", "gl", vim.diagnostic.open_float)
 
 -- == Autocompletion ==
 vim.o.autocomplete = true
+vim.o.completeopt = { 'menuone', 'noselect', } -- Always show menu, do not preselect an option
+vim.o.complete = "o"
+vim.o.pumheight = 7 -- Show n Entries in the Menu
 
 -- Enable LSP Autocompletion
 vim.api.nvim_create_autocmd( 'LspAttach', {
     callback = function(ev)
-        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
-        if client:supports_method('textDocument/completion') then
-            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-        end
+        vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = true })
     end
 })
-
--- Only show options, don't apply them
-vim.opt.complete:append('o')
-
-vim.opt.completeopt = { 'menuone', 'noselect' }
-
--- Show n Entries in the Menu
-vim.o.pumheight = 7
 
 -- == Terminal ==
 vim.keymap.set("t", "<Esc>", "<C-\\><C-N>", { desc = "Exit Terminal Mode" })
 
+-- Open Terminal in nvim
 vim.keymap.set("n", "<leader>tt", function()
     vim.cmd.vnew()
     vim.cmd.term()
     vim.cmd.wincmd("J")
-    vim.api.nvim_win_set_height(0, 20)
+    vim.api.nvim_win_resize(0, -1, 20, {})
     vim.cmd.startinsert()
 end, { desc = "Open Terminal in the bottom" })
 
@@ -292,14 +116,163 @@ vim.api.nvim_create_autocmd("TermOpen", {
     end,
 })
 
--- == Other Keybinds ==
-vim.keymap.set("n", "<Esc>", "<cmd>nohl<cr>", { desc = "Clear search highlights" })
+-- == Plugins ==
+vim.pack.add({
+    -- Configuration
+    {src = "https://github.com/folke/tokyonight.nvim"}, -- Theme
+    {src = "https://github.com/nvim-tree/nvim-web-devicons"}, -- Nerdicons
 
-vim.keymap.set("n", "<leader>tv", "<C-w>v", { desc = "Split window vertically" })
-vim.keymap.set("n", "<leader>th", "<C-w>s", { desc = "Split window horizontally" })
-vim.keymap.set("n", "<leader>tx", "<C-w>q", { desc = "Close current window" })
+    {src = "https://github.com/nvim-lua/plenary.nvim"}, -- Plugin Dependency
 
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Navigate Up" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Navigate Down" })
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Navigate Left" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Navigate Right" })
+    -- Do i even use the features of this? Check if some problem occurs and if not remove it.
+    -- {src = "https://github.com/nvim-treesitter/nvim-treesitter"}, -- Code parsing
+    {src = "https://github.com/folke/which-key.nvim"}, -- Keybind Cheatsheet
+    {src = "https://github.com/ibhagwan/fzf-lua"}, -- Fuzzyfinder
+    {src = "https://github.com/neovim/nvim-lspconfig"}, -- Preconfigured Lsps
+    {src = "https://github.com/nvim-lualine/lualine.nvim"}, -- Bottom bar
+    {src = "https://github.com/stevearc/oil.nvim"}, -- File explorer with vim bindings
+    -- {src = "https://github.com/windwp/nvim-ts-autotag"}, -- Html tag pairing
+    {src = "https://github.com/windwp/nvim-autopairs"}, -- Parentheses pairing
+
+    -- Utils
+    {src = "https://github.com/chomosuke/typst-preview.nvim"}, -- Typst live preview
+    {src = "https://github.com/epwalsh/obsidian.nvim"}, -- Obsidian interactivity
+})
+
+vim.cmd.colorscheme "tokyonight-storm"
+
+-- == Nerdicons ==
+require("nvim-web-devicons").setup()
+
+-- == Auto Html tags == (Not constantly needed. Might need to add some sort of autocmd)
+-- require("nvim-ts-autotag").setup({
+--     opts = {
+--         enable_close = true, -- Auto close tags
+--         enable_rename = true, -- Auto rename pairs of tags
+--         enable_close_on_slash = true -- Auto close on trailing </
+--     }
+-- })
+
+-- == Auto brackets and quotes ==
+require("nvim-autopairs").setup({
+    check_ts = true,
+    ts_config = {
+        lua = { "string" },
+        javascript = { "template_string" },
+    },
+})
+
+-- == Better bottom line ==
+require("lualine").setup( { options = { theme = "tokyonight-storm" } } )
+
+-- == Show Keybinds ==
+require("which-key").setup({
+
+    preset = "modern",
+    win = { border = "none"},
+})
+
+require("which-key").add({
+
+    { "<leader>s", group = "Search", icon = ""},
+    { "<leader>f", group = "File explorer"},
+    { "<leader>t", group = "Panes", icon = ""},
+    { "<leader>o", group = "Obsidian", icon = "󱨠"},
+})
+
+-- == Fuzzy finder ==
+require("fzf-lua").setup({
+
+    winopts = {
+        backdrop = 100,
+        fullscreen = true,
+    }
+})
+
+vim.keymap.set("n", "<leader>ss", "<cmd>FzfLua<cr>", { desc = "FzfLua" })
+vim.keymap.set("n", "<leader>sf", "<cmd>FzfLua files<cr>", { desc = "Search Files" })
+vim.keymap.set("n", "<leader>sr", "<cmd>FzfLua grep<cr>", { desc = "Grep Files" })
+vim.keymap.set("n", "<leader>sc", "<cmd>FzfLua files cwd=~/.config<cr>", { desc = "Search .config" })
+
+-- == Tui File Explorer with Vim Buffers ==
+require("oil").setup({
+
+    skip_confirm_for_simple_edits = true,
+
+    prompt_save_on_select_new_entry = true,
+
+    keymaps = {
+        ["<leader>ff"] = {"actions.close", mode = "n"},
+        ["<C-c>"] = { "actions.close", mode = "n" },
+        ["<CR>"] = "actions.select",
+
+        ["g?"] = { "actions.show_help", mode = "n" },
+        ["<C-p>"] = "actions.preview",
+        ["-"] = { "actions.parent", mode = "n" },
+        ["g."] = { "actions.toggle_hidden", mode = "n" },
+    },
+
+    use_default_keymaps = false,
+    view_options = { show_hidden = true, }, -- Show hidden files (.something)
+})
+
+vim.keymap.set("n", "<leader>ff", "<cmd>Oil<cr>")
+
+-- == Typst-preview ==
+require("typst-preview").setup({
+
+    -- Necessary for NixOS. Don't ask why
+    extra_args = { "--verbose" },
+    dependencies_bin = {
+        tinymist = "tinymist",
+        websocat = "websocat",
+    },
+})
+
+-- == Obsidian ==
+require("obsidian").setup({
+
+    ui = { enable = false },
+
+    workspaces = {
+
+        {
+            name = "notes",
+            path = "~/Documents/notes/",
+        },
+    },
+
+    mappings = {
+
+        -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
+        ["gf"] = {
+            action = function()
+                return require("obsidian").util.gf_passthrough()
+            end,
+            opts = { noremap = false, expr = true, buffer = true },
+        },
+        -- Smart action depending on context, either follow link or toggle checkbox.
+        ["<cr>"] = {
+            action = function()
+                return require("obsidian").util.smart_action()
+            end,
+            opts = { buffer = true, expr = true },
+        }
+    },
+
+    -- Creates note with 12 random digits (385018402918)
+    note_id_func = function()
+
+        local suffix = ""
+
+        for _ = 1, 12 do
+            suffix = suffix .. string.char(math.random(48, 57))
+        end
+
+        return suffix
+    end,
+})
+
+vim.keymap.set("n", "<leader>so", "<cmd>ObsidianSearch<cr>")
+vim.keymap.set("n", "<leader>on", "<cmd>ObsidianNew<cr>")
+vim.keymap.set("n", "<leader>oo", "<cmd>ObsidianOpen<cr>")
