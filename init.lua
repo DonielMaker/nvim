@@ -83,8 +83,8 @@ vim.keymap.set("n", "gl", vim.diagnostic.open_float)
 
 -- == Autocompletion ==
 vim.o.autocomplete = true
-vim.o.completeopt = { 'menuone', 'noselect', } -- Always show menu, do not preselect an option
-vim.o.complete = "o"
+vim.o.completeopt = "fuzzy,menuone,noselect" -- Always show menu, do not preselect an option
+vim.o.complete = ".,o"
 vim.o.pumheight = 7 -- Show n Entries in the Menu
 
 -- Enable LSP Autocompletion
