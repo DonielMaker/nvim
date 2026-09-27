@@ -136,7 +136,6 @@ vim.pack.add({
 
     -- Utils
     {src = "https://github.com/chomosuke/typst-preview.nvim"}, -- Typst live preview
-    {src = "https://github.com/epwalsh/obsidian.nvim"}, -- Obsidian interactivity
 })
 
 vim.cmd.colorscheme "tokyonight-storm"
@@ -228,51 +227,3 @@ require("typst-preview").setup({
         websocat = "websocat",
     },
 })
-
--- == Obsidian ==
-require("obsidian").setup({
-
-    ui = { enable = false },
-
-    workspaces = {
-
-        {
-            name = "notes",
-            path = "~/Documents/notes/",
-        },
-    },
-
-    mappings = {
-
-        -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-        ["gf"] = {
-            action = function()
-                return require("obsidian").util.gf_passthrough()
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
-        },
-        -- Smart action depending on context, either follow link or toggle checkbox.
-        ["<cr>"] = {
-            action = function()
-                return require("obsidian").util.smart_action()
-            end,
-            opts = { buffer = true, expr = true },
-        }
-    },
-
-    -- Creates note with 12 random digits (385018402918)
-    note_id_func = function()
-
-        local suffix = ""
-
-        for _ = 1, 12 do
-            suffix = suffix .. string.char(math.random(48, 57))
-        end
-
-        return suffix
-    end,
-})
-
-vim.keymap.set("n", "<leader>so", "<cmd>ObsidianSearch<cr>")
-vim.keymap.set("n", "<leader>on", "<cmd>ObsidianNew<cr>")
-vim.keymap.set("n", "<leader>oo", "<cmd>ObsidianOpen<cr>")
