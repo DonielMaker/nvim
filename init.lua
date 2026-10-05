@@ -221,7 +221,6 @@ vim.keymap.set("n", "<leader>ff", "<cmd>Oil<cr>")
 require("typst-preview").setup({
 
     -- Necessary for NixOS. Don't ask why
-    extra_args = { "--verbose" },
     dependencies_bin = {
         tinymist = "tinymist",
         websocat = "websocat",
